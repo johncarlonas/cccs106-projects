@@ -4,6 +4,9 @@ import flet as ft
 from db_connection import *
 
 async def login_click(e):
+    username = username_input.value.strip()
+    password = password_input.value.strip()
+    
     success_dialog = ft.AlertDialog(
                         modal=True,
                         title= ft.Column(
@@ -15,7 +18,7 @@ async def login_click(e):
                             alignment=ft.MainAxisAlignment.CENTER,  
                             horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
                         ),
-                        content=ft.Text("Welcome, testuser!", text_align=ft.TextAlign.CENTER),
+                        content=ft.Text(f"Welcome, {username}!", text_align=ft.TextAlign.CENTER),
                         actions=[
                             ft.TextButton("OK", on_click=lambda ev: e.page.close(success_dialog)),
                         ],
@@ -26,7 +29,7 @@ async def login_click(e):
                         modal=True,
                         title= ft.Column(
                             [
-                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Icon(name=ft.Icons.ERROR, color=ft.Colors.RED),
                                 ft.Text("Login Failed")
                                 
                             ],             
@@ -40,11 +43,11 @@ async def login_click(e):
                         actions_alignment=ft.MainAxisAlignment.END,
                     )
     
-    input_error_dialog = ft.AlertDialog(
+    invalid_input_dialog = ft.AlertDialog(
                         modal=True,
                         title= ft.Column(
                             [
-                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Icon(name=ft.Icons.ERROR, color=ft.Colors.BLUE),
                                 ft.Text("Input Error")
                                 
                             ],             
@@ -53,22 +56,14 @@ async def login_click(e):
                         ),
                         content=ft.Text("Please enter username and password", text_align=ft.TextAlign.CENTER),
                         actions=[
-                            ft.TextButton("OK", on_click=lambda ev: e.page.close(input_error_dialog)),
+                            ft.TextButton("OK", on_click=lambda ev: e.page.close(invalid_input_dialog)),
                         ],
                         actions_alignment=ft.MainAxisAlignment.END,
                     )
     
     database_error_dialog = ft.AlertDialog(
                         modal=True,
-                        title= ft.Column(
-                            [
-                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
-                                ft.Text("Database Error")
-                                
-                            ],             
-                            alignment=ft.MainAxisAlignment.CENTER,  
-                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
-                        ),
+                        title= ft.Text("Database Error", text_align=ft.TextAlign.CENTER),
                         content=ft.Text("An error occured while connecting to the database", text_align=ft.TextAlign.CENTER),
                         actions=[
                             ft.TextButton("OK", on_click=lambda ev: e.page.close(database_error_dialog)),
@@ -76,11 +71,42 @@ async def login_click(e):
                         actions_alignment=ft.MainAxisAlignment.END,
                     )
     
-    e.page.open(success_dialog)
-    e.page.update()
+    if not username or not password:
+        e.page.open(invalid_input_dialog)
+        e.page.update()
+        return
+    
+    try:
+        connect = connect_db()
+        if connect is None:
+            e.page.open(database_error_dialog)
+            e.page.update()
+            return
+        
+        cursor = connect.cursor()
+        
+        query = "SELECT * FROM users WHERE username = %s AND password = %s"
+        cursor.execute(query, (username, password))
 
+        result = cursor.fetchone()
+
+        cursor.close()
+        connect.close()
+
+        if result:
+            e.page.open(success_dialog)
+        else:
+            e.page.open(failure_dialog)
+
+        e.page.update()
+
+    except Error:
+        e.page.open(database_error_dialog)
+        e.page.update()
 
 def main(page: ft.Page): 
+    global username_input, password_input
+    
     page.bgcolor = ft.Colors.AMBER_ACCENT 
     page.window.title_bar_hidden = True 
     page.window.frameless = True 
@@ -98,10 +124,7 @@ def main(page: ft.Page):
         weight=ft.FontWeight.BOLD,
     )
     
-    username_input = ft.Row(
-        [
-            ft.Icon(ft.Icons.PERSON, color=ft.Colors.GREY_800),
-            ft.TextField(
+    username_input = ft.TextField(
                 label="User name",
                 hint_text="Enter your user name",
                 helper_text="This is your unique identifier",
@@ -109,15 +132,17 @@ def main(page: ft.Page):
                 autofocus=True,
                 bgcolor=ft.Colors.LIGHT_BLUE_ACCENT,
             )
+    
+    username_field = ft.Row(
+        [
+            ft.Icon(ft.Icons.PERSON, color=ft.Colors.GREY_800),
+            username_input
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
     
-    password_input = ft.Row(
-        [
-            ft.Icon(ft.Icons.PASSWORD, color=ft.Colors.GREY_800),
-            ft.TextField(
+    password_input = ft.TextField(
                 label="Password",
                 hint_text="Enter your password",
                 helper_text="This is your secret key",
@@ -126,6 +151,11 @@ def main(page: ft.Page):
                 can_reveal_password=True, 
                 bgcolor=ft.Colors.LIGHT_BLUE_ACCENT,
             )
+    
+    password_field = ft.Row(
+        [
+            ft.Icon(ft.Icons.PASSWORD, color=ft.Colors.GREY_800),
+            password_input
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
@@ -147,8 +177,8 @@ def main(page: ft.Page):
                 ft.Container( 
                     ft.Column(
                         [
-                            username_input,
-                            password_input
+                            username_field,
+                            password_field
                         ],
                         spacing=20,
                         alignment=ft.MainAxisAlignment.CENTER
