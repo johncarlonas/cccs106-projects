@@ -1,5 +1,84 @@
 import flet as ft
 
+import flet as ft
+from db_connection import *
+
+async def login_click(e):
+    success_dialog = ft.AlertDialog(
+                        modal=True,
+                        title= ft.Column(
+                            [
+                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Text("Login Successful")
+                                
+                            ],             
+                            alignment=ft.MainAxisAlignment.CENTER,  
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
+                        ),
+                        content=ft.Text("Welcome, testuser!", text_align=ft.TextAlign.CENTER),
+                        actions=[
+                            ft.TextButton("OK", on_click=lambda ev: e.page.close(success_dialog)),
+                        ],
+                        actions_alignment=ft.MainAxisAlignment.END,
+                    )
+    
+    failure_dialog = ft.AlertDialog(
+                        modal=True,
+                        title= ft.Column(
+                            [
+                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Text("Login Failed")
+                                
+                            ],             
+                            alignment=ft.MainAxisAlignment.CENTER,  
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
+                        ),
+                        content=ft.Text("Invalid username or password", text_align=ft.TextAlign.CENTER),
+                        actions=[
+                            ft.TextButton("OK", on_click=lambda ev: e.page.close(failure_dialog)),
+                        ],
+                        actions_alignment=ft.MainAxisAlignment.END,
+                    )
+    
+    input_error_dialog = ft.AlertDialog(
+                        modal=True,
+                        title= ft.Column(
+                            [
+                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Text("Input Error")
+                                
+                            ],             
+                            alignment=ft.MainAxisAlignment.CENTER,  
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
+                        ),
+                        content=ft.Text("Please enter username and password", text_align=ft.TextAlign.CENTER),
+                        actions=[
+                            ft.TextButton("OK", on_click=lambda ev: e.page.close(input_error_dialog)),
+                        ],
+                        actions_alignment=ft.MainAxisAlignment.END,
+                    )
+    
+    database_error_dialog = ft.AlertDialog(
+                        modal=True,
+                        title= ft.Column(
+                            [
+                                ft.Icon(name=ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN),
+                                ft.Text("Database Error")
+                                
+                            ],             
+                            alignment=ft.MainAxisAlignment.CENTER,  
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
+                        ),
+                        content=ft.Text("An error occured while connecting to the database", text_align=ft.TextAlign.CENTER),
+                        actions=[
+                            ft.TextButton("OK", on_click=lambda ev: e.page.close(database_error_dialog)),
+                        ],
+                        actions_alignment=ft.MainAxisAlignment.END,
+                    )
+    
+    e.page.open(success_dialog)
+    e.page.update()
+
 
 def main(page: ft.Page): 
     page.bgcolor = ft.Colors.AMBER_ACCENT 
@@ -56,6 +135,8 @@ def main(page: ft.Page):
                     "Login",
                     icon=ft.Icons.LOGIN,
                     icon_color=ft.Colors.BLUE_800,
+                    width=100,
+                    on_click=login_click
                 )
     
     page.add(
@@ -69,7 +150,7 @@ def main(page: ft.Page):
                             username_input,
                             password_input
                         ],
-                        spacing=15,
+                        spacing=20,
                         alignment=ft.MainAxisAlignment.CENTER
                     ),
                 ), 
@@ -81,14 +162,13 @@ def main(page: ft.Page):
                         ],
                         alignment=ft.MainAxisAlignment.END,
                     ),
-                    width=300
+                    margin=ft.margin.only(top=0, right=20, bottom=40, left=0)
                 )
             ],
             alignment=ft.MainAxisAlignment.CENTER,  
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,  
-            spacing=15,
         )
     )
+    
 
-
-ft.app(main)
+ft.app(target=main)
