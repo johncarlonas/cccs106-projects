@@ -15,7 +15,7 @@ Enhance a Contact Book application using Flet, implementing CRUD operations, inp
 ## II. Prerequisites
 
 - Python 3.x
-- Flet 28.3
+- Flet 0.28.3
 - SQLite3
 
 ## III. Setup Instructions
@@ -108,7 +108,7 @@ flet run --web
 
 **Add Contact**
 
-![Add Contact Light](lab4_screenshots/add_contact_light.png)
+![Add Contact Light](contact_book_app\week4_screenshots\add_contact_Light.png)
 ![Add Contact Dark](lab4_screenshots/add_contact_dark.png)
 
 
