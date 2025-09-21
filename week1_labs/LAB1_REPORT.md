@@ -1,9 +1,13 @@
 # Lab 1 Report: Environment Setup and Python Basics
 
 **Student Name:** John Carlo E. Nas
+
 **Student ID:** 231002281
+
 **Section:** 3A
+
 **Date:** 8/27/2025
+
 
 ## Environment Setup
 

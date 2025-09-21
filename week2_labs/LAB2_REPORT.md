@@ -1,9 +1,13 @@
 # Lab 2 Report: Git Version Control and Flet GUI Development
 
 **Student Name:** John Carlo Nas
+
 **Student ID:** 2331002281
+
 **Section:** BSCS-3A
+
 **Date:** 08/27/2025
+
 
 ## Git Configuration
 
