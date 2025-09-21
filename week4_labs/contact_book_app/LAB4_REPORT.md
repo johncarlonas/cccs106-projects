@@ -90,7 +90,7 @@ flet run --web
 
 **Home UI**
 
-![Home UI Light](lab4_screenshots/home_ui_light.png)  
+![Home UI Light](lab4_screenshots/home_ui_light.png)
 ![Home UI Dark](lab4_screenshots/home_ui_dark.png)  
 
 
@@ -108,7 +108,7 @@ flet run --web
 
 **Add Contact**
 
-![Add Contact Light](contact_book_app\week4_screenshots\add_contact_Light.png)
+![Add Contact Light](lab4_screenshots/add_contact_light.png)
 ![Add Contact Dark](lab4_screenshots/add_contact_dark.png)
 
 
@@ -145,7 +145,7 @@ flet run --web
 **Input Error**
 
 ![Input Error Light](lab4_screenshots/input_error_light.png)
-![Input Error Dark](lab4_screenshots/input_error_dark.png)         |
+![Input Error Dark](lab4_screenshots/input_error_dark.png)
 
 
 ## IX. Additional Learning Tasks
