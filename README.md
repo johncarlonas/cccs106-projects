@@ -19,6 +19,16 @@ Academic Year 2025-2026
 - `week2_labs/personal_info_gui.py` - Enhanced personal information manager
 - `week2_labs/enhanced_calculator.py` - GUI calculator (coming soon)
 
+### Week 3 Labs - Flet User Login Application
+- `week3_labs/src/db_connection.py` - Handles the connection of Flet application to the SQL database
+- `week3_labs/src/main.py` - Login Form Application GUI
+
+### Week 4 Labs - Contact book Application Enhancement
+- `week4_labs/contact_book_app/src/database.py` - Manages all communication with the contacts.db file.
+- `week4_labs/contact_book_app/src/contacts.db` - SQLite database of the Flet application
+- `week4_labs/contact_book_app/src/app_logic.py` -  All logic that connects user actions to database functions.
+- `week4_labs/contact_book_app/src/main.py` - Contact Book Application GUI
+  
 ### Module 1 Final Project
 - `module1_final/` - Final integrated project (TBD)
 
@@ -29,7 +39,7 @@ Academic Year 2025-2026
 - **VS Code** - Integrated development environment
 
 ## Development Environment
-- **Virtual Environment:** cccs106_env
+- **Virtual Environment:** cccs106_env_nas
 - **Python Packages:** flet==0.28.3
 - **Platform:** Windows 10/11
 
@@ -37,5 +47,5 @@ Academic Year 2025-2026
 
 ### Prerequisites
 1. Python 3.8+ installed
-2. Virtual environment activated: `cccs106_env\Scripts\activate`
+2. Virtual environment activated: `cccs106_env_nas\Scripts\activate`
 3. Flet installed: `pip install flet==0.28.3`
