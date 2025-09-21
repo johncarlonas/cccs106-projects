@@ -92,19 +92,30 @@ flet run
 ## VIII. Screenshots
 
 **User Login Blank**
+
 ![User Login Blank](lab3_screenshots/user_login_blank.png)
 
+
 **User Login Entry**
+
 ![User Login Entry](lab3_screenshots/user_login_entry.png)
 
+
 **Login Successful**
-![Login Successful](lab3_screenshots/login_sucessful.png)
+
+![Login Successful](lab3_screenshots/login_successful.png)
+
 
 **Login Failed**
+
 ![Login Failed](lab3_screenshots/login_failed.png)
 
+
 **Input Error**
+
 ![Input Error](lab3_screenshots/input_error.png)
 
+
 **Database Error**
+
 ![Database Error](lab3_screenshots/database_error.png)
